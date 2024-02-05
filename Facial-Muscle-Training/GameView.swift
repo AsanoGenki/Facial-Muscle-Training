@@ -61,7 +61,7 @@ struct GameView : View {
                         arViewModel.updateGameTime()
                         
                         if arViewModel.gameTime == 0 {
-                            arViewModel.changeGameStage(newGameStage: .menu)
+                            arViewModel.changeGameStage(newGameStage: .ending)
                         }
                     } catch {
                         print ("error")

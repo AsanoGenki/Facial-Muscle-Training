@@ -8,13 +8,15 @@
 import SwiftUI
 
 enum GameStage: CaseIterable {
-    case menu,game
+    case menu,game,ending
     
     var string: String {
         switch self {
         case .menu:
             return "Menu"
         case .game: return "スタート"
+        case .ending:
+            return "End"
         }
     }
     
@@ -24,6 +26,8 @@ enum GameStage: CaseIterable {
             return .clear
         case .game:
             return .green
+        case .ending:
+            return .clear
         }
     }
     
@@ -32,6 +36,8 @@ enum GameStage: CaseIterable {
         case .menu:
             return "list.bullet"
         case .game: return "person"
+        case .ending:
+            return "xmark"
         }
     }
 }

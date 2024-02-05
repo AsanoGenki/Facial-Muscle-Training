@@ -16,6 +16,7 @@ struct ARModel {
     var eyeStatus: eyeScale = .neutral
     var eyebrowStatus: eyebrowScale = .neutral
     var facesArray: Array<faces> = []
+    var collectedFaces: Array<faces> = []
     var currentScore: Int = 0
     var gametime: Int = 0
     var countdownTime: Int = 3
@@ -25,6 +26,7 @@ struct ARModel {
         arView.session.run(ARFaceTrackingConfiguration())
         gametime = 15
         facesArray = []
+        collectedFaces = []
         for face in faces.allCases {
             facesArray.append(face)
         }
@@ -83,6 +85,7 @@ struct ARModel {
                 gametime += 1
             }
             simpleSuccess()
+            collectedFaces.append(facesArray[0])
             facesArray.remove(at: 0)
 
         }

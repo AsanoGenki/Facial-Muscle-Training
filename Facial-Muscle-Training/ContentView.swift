@@ -16,6 +16,8 @@ struct ContentView : View {
             case .menu: MenuView(arViewModel: arViewModel)
             case .game:
                 GameView(arViewModel: arViewModel)
+            case .ending:
+                EndingView(arViewModel: arViewModel)
             }
         }
     }

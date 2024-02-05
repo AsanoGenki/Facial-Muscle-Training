@@ -13,9 +13,9 @@ struct MenuView: View{
     var body: some View {
         ZStack{
             VStack{
-                Text("FaceMatch")
+                Text("表情筋トレーニング")
                     .foregroundColor(.black)
-                    .font(.system(size: 50, design: .rounded).bold())
+                    .font(.system(size: 36, design: .rounded).bold())
                 Image("Beaming face with smiling eyes")
                     .resizable()
                     .scaledToFit()
