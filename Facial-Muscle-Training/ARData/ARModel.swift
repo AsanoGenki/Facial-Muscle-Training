@@ -15,6 +15,7 @@ struct ARModel {
     var smileLeft: Float = 0
     var mouthStatus: mouthScale = .neutral
     var eyeStatus: eyeScale = .neutral
+    var eyebrowStatus: eyebrowScale = .neutral
     
     init() {
         arView = ARView(frame: .zero)
@@ -44,6 +45,12 @@ struct ARModel {
         let eyeLookUpLeft = Float(truncating: faceAnchor.blendShapes.first(where: {$0.key == .eyeLookUpLeft})?.value ?? 0)
         let eyeLookUpRight = Float(truncating: faceAnchor.blendShapes.first(where: {$0.key == .eyeLookUpRight})?.value ?? 0)
         eyeStatus = eyeCheck(eyeBlinkLeft: eyeBlinkLeft, eyeBlinkRight: eyeBlinkRight, eyeWideLeft: eyeWideLeft, eyeWideRight: eyeWideRight, eyeLookUpLeft: eyeLookUpLeft, eyeLookUpRight: eyeLookUpRight, eyeSquintLeft: eyeSquintLeft, eyeSquintRight: eyeSquintRight)
+        
+        // EYEBROWS
+        let eyebrowInnerUp = Float(truncating: faceAnchor.blendShapes.first(where: {$0.key == .browInnerUp})?.value ?? 0)
+        let eyebrowDownLeft = Float(truncating: faceAnchor.blendShapes.first(where: {$0.key == .browDownLeft})?.value ?? 0)
+        let eyebrowDownRight = Float(truncating: faceAnchor.blendShapes.first(where: {$0.key == .browDownRight})?.value ?? 0)
+        eyebrowStatus = eyebrowCheck(eyebrowInnerUp: eyebrowInnerUp, eyebrowDownLeft: eyebrowDownLeft, eyebrowDownRight: eyebrowDownRight)
     }
     mutating func mouthCheck(tongueOut: Float, frownLeft: Float, frownRight: Float, smileLeft: Float, smileRight: Float, mouthPucker: Float, mouthFunnel: Float) -> mouthScale {
         
@@ -80,6 +87,20 @@ struct ARModel {
             result = .wink
         } else if eyeSquintLeft > 0.3 && eyeSquintRight > 0.3 {
             result = .squinting
+        }
+        
+        return result
+    }
+    mutating func eyebrowCheck(eyebrowInnerUp: Float, eyebrowDownLeft: Float, eyebrowDownRight: Float) -> eyebrowScale {
+        
+        var result = eyebrowScale.neutral
+        
+        if eyebrowInnerUp > 0.6 && eyebrowDownLeft == 0 && eyebrowDownRight == 0 {
+            result = .surprised
+        } else if eyebrowInnerUp > 0.1 && ( (eyebrowDownLeft < 0.3 && eyebrowDownLeft > 0 ) || ( eyebrowDownRight < 0.3 && eyebrowDownRight > 0 )) {
+            result = .splitSkeptical
+        } else if eyebrowDownRight > 0.7 && eyebrowDownLeft > 0.7 {
+            result = .furrowed
         }
         
         return result

@@ -48,3 +48,18 @@ enum eyeScale: CaseIterable {
         }
     }
 }
+enum eyebrowScale: CaseIterable {
+    case neutral, surprised, furrowed, splitSkeptical
+    
+    var string: String {
+        switch self {
+        case .neutral: return "Neutral"
+        case .surprised:
+            return "Suprised"
+        case .furrowed:
+            return "Furrowed"
+        case .splitSkeptical:
+            return "Skeptical"
+        }
+    }
+}
