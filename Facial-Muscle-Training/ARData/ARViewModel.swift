@@ -42,6 +42,9 @@ class ARViewModel: UIViewController, ObservableObject, ARSessionDelegate {
     func startSessionDelegate() {
         model.arView.session.delegate = self
     }
+    func gameSetup() {
+        model.gameSetup()
+    }
     //顔を識別し、update関数を実行する
     func session(_ session: ARSession, didUpdate anchors: [ARAnchor]) {
         if let faceAnchor = anchors.first  as? ARFaceAnchor {

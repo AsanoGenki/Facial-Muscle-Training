@@ -36,6 +36,7 @@ struct MenuView: View{
     func gameButton(gameStage: GameStage, text: String, color: Color, icon: String) -> some View {
         Button {
             arViewModel.changeGameStage(newGameStage: gameStage)
+            arViewModel.gameSetup()
         } label: {
             GameButtonView(text: text, color: color)
         }

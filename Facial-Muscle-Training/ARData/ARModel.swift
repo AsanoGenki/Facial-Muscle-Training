@@ -24,13 +24,7 @@ struct ARModel {
     init() {
         arView = ARView(frame: .zero)
         arView.session.run(ARFaceTrackingConfiguration())
-        gametime = 15
-        facesArray = []
-        collectedFaces = []
-        for face in faces.allCases {
-            facesArray.append(face)
-        }
-        facesArray.shuffle()
+        gameSetup()
     }
     mutating func updateGameStage(gameStage: GameStage) {
         gameStageVar = gameStage
@@ -43,6 +37,18 @@ struct ARModel {
     }
     mutating func countdownTimeUpdate() {
         countdownTime -= 1
+    }
+    mutating func gameSetup() {
+        currentScore = 0
+        countdownTime = 3
+        gametime = 15
+        facesArray = []
+        for face in faces.allCases {
+            facesArray.append(face)
+        }
+        facesArray.shuffle()
+        collectedFaces = []
+
     }
     mutating func update(faceAnchor: ARFaceAnchor){
         // LIPS

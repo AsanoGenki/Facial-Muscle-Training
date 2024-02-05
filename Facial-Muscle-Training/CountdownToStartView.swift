@@ -24,7 +24,6 @@ struct CountdownToStartView : View {
                         arViewModel.countdownTimeUpdate()
                     }
                 } catch {
-                    print ("error 3")
                 }
             }
         }

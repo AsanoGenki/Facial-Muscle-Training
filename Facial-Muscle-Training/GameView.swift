@@ -64,7 +64,6 @@ struct GameView : View {
                             arViewModel.changeGameStage(newGameStage: .ending)
                         }
                     } catch {
-                        print ("error")
                     }
                 }
             }
@@ -97,7 +96,6 @@ struct GameView : View {
                     frameSize = 100
                 }
             } catch {
-                print ("error")
             }
         }
     }
