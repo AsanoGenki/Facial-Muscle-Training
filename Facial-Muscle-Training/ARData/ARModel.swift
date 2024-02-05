@@ -16,10 +16,15 @@ struct ARModel {
     var mouthStatus: mouthScale = .neutral
     var eyeStatus: eyeScale = .neutral
     var eyebrowStatus: eyebrowScale = .neutral
+    var facesArray: Array<faces> = []
     
     init() {
         arView = ARView(frame: .zero)
         arView.session.run(ARFaceTrackingConfiguration())
+        facesArray = []
+        for face in faces.allCases {
+            facesArray.append(face)
+        }
     }
     
     mutating func update(faceAnchor: ARFaceAnchor){

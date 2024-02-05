@@ -10,7 +10,7 @@ import RealityKit
 import ARKit
 
 class ARViewModel: UIViewController, ObservableObject, ARSessionDelegate {
-    @Published private var model : ARModel = ARModel()
+    @Published var model : ARModel = ARModel()
     
     var arView : ARView {
         model.arView
@@ -22,6 +22,9 @@ class ARViewModel: UIViewController, ObservableObject, ARSessionDelegate {
         }
         return temp
     }
+    func shuffle() {
+        model.facesArray.shuffle()
+    }
     func startSessionDelegate() {
         model.arView.session.delegate = self
     }
@@ -31,4 +34,5 @@ class ARViewModel: UIViewController, ObservableObject, ARSessionDelegate {
             model.update(faceAnchor: faceAnchor)
         }
     }
+    
 }
