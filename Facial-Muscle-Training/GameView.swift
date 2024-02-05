@@ -17,7 +17,7 @@ struct GameView : View {
             VStack {
                 HStack{
                     VStack{
-                        Label(String("0"), systemImage: "gamecontroller")
+                        Label(String(arViewModel.score), systemImage: "gamecontroller")
                             .padding()
                             .background(RoundedRectangle(cornerRadius: 15).fill(.regularMaterial))
                                 Label(String("0"), systemImage: "trophy")
@@ -67,6 +67,7 @@ struct GameView : View {
     }
     func changeEmoji() {
         arViewModel.shuffle()
+        arViewModel.simpleSuccess()
         withAnimation(.spring(dampingFraction: 0.5)) {
             frameSize = 130
         }

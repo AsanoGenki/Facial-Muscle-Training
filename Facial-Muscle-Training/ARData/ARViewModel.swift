@@ -15,15 +15,14 @@ class ARViewModel: UIViewController, ObservableObject, ARSessionDelegate {
     var arView : ARView {
         model.arView
     }
-    var isSmiling: Bool {
-        var temp = false
-        if model.smileLeft > 0.8 || model.smileRight > 0.8 {
-            temp = true
-        }
-        return temp
+    var score: Int {
+        model.currentScore
     }
     func shuffle() {
         model.facesArray.shuffle()
+    }
+    func simpleSuccess() {
+        model.simpleSuccess()
     }
     func startSessionDelegate() {
         model.arView.session.delegate = self

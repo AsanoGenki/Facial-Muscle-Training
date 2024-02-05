@@ -11,12 +11,11 @@ import ARKit
 
 struct ARModel {
     private(set) var arView : ARView
-    var smileRight: Float = 0
-    var smileLeft: Float = 0
     var mouthStatus: mouthScale = .neutral
     var eyeStatus: eyeScale = .neutral
     var eyebrowStatus: eyebrowScale = .neutral
     var facesArray: Array<faces> = []
+    var currentScore: Int = 0
     
     init() {
         arView = ARView(frame: .zero)
@@ -28,8 +27,6 @@ struct ARModel {
     }
     
     mutating func update(faceAnchor: ARFaceAnchor){
-        smileRight = Float(truncating: faceAnchor.blendShapes.first(where: {$0.key == .mouthSmileRight})?.value ?? 0)
-        smileLeft = Float(truncating: faceAnchor.blendShapes.first(where: {$0.key == .mouthSmileLeft})?.value ?? 0)
         // LIPS
         let smileRight = Float(truncating: faceAnchor.blendShapes.first(where: {$0.key == .mouthSmileRight})?.value ?? 0)
         let smileLeft = Float(truncating: faceAnchor.blendShapes.first(where: {$0.key == .mouthSmileLeft})?.value ?? 0)
@@ -56,6 +53,19 @@ struct ARModel {
         let eyebrowDownLeft = Float(truncating: faceAnchor.blendShapes.first(where: {$0.key == .browDownLeft})?.value ?? 0)
         let eyebrowDownRight = Float(truncating: faceAnchor.blendShapes.first(where: {$0.key == .browDownRight})?.value ?? 0)
         eyebrowStatus = eyebrowCheck(eyebrowInnerUp: eyebrowInnerUp, eyebrowDownLeft: eyebrowDownLeft, eyebrowDownRight: eyebrowDownRight)
+        
+        if facesArray.count > 0 {
+            faceCheck(face: facesArray.first!, eyes: eyeStatus, eyebrows: eyebrowStatus, mouth: mouthStatus)
+        }
+    }
+    mutating func faceCheck(face: faces, eyes: eyeScale, eyebrows: eyebrowScale, mouth: mouthScale ) {
+        if (face.eyeScale.contains(where: {$0 == eyes})) && (face.eyebrowScale.contains(where: {$0 == eyebrows})) && (face.mouthScale.contains(where: {$0 == mouth})) {
+
+            currentScore += 1
+            simpleSuccess()
+            facesArray.remove(at: 0)
+
+        }
     }
     mutating func mouthCheck(tongueOut: Float, frownLeft: Float, frownRight: Float, smileLeft: Float, smileRight: Float, mouthPucker: Float, mouthFunnel: Float) -> mouthScale {
         
@@ -109,5 +119,9 @@ struct ARModel {
         }
         
         return result
+    }
+    func simpleSuccess() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
     }
 }
