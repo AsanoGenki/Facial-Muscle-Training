@@ -18,6 +18,8 @@ struct ContentView : View {
                 GameView(arViewModel: arViewModel)
             case .ending:
                 EndingView(arViewModel: arViewModel)
+            case .manual:
+                ManualView(arViewModel: arViewModel)
             }
         }
     }

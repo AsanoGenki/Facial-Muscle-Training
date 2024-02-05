@@ -25,7 +25,7 @@ struct MenuView: View{
                     .font(.system(size: 20, design: .rounded).bold())
                 ForEach(GameStage.allCases, id: \.self) { gameStage in
                     switch gameStage {
-                    case .game: gameButton(gameStage: gameStage, text: gameStage.string, color: gameStage.color, icon: gameStage.icon)
+                    case .game, .manual: gameButton(gameStage: gameStage, text: gameStage.string, color: gameStage.color, icon: gameStage.icon)
                             .padding(5)
                     default: EmptyView()
                     }
