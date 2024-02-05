@@ -18,6 +18,7 @@ struct ARModel {
     var facesArray: Array<faces> = []
     var currentScore: Int = 0
     var gametime: Int = 0
+    var countdownTime: Int = 3
     
     init() {
         arView = ARView(frame: .zero)
@@ -37,6 +38,9 @@ struct ARModel {
         case .game: gametime -= 1
         default: break
         }
+    }
+    mutating func countdownTimeUpdate() {
+        countdownTime -= 1
     }
     mutating func update(faceAnchor: ARFaceAnchor){
         // LIPS

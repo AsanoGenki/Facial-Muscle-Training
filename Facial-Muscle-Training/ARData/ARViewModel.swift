@@ -24,6 +24,12 @@ class ARViewModel: UIViewController, ObservableObject, ARSessionDelegate {
     var gameTime: Int {
         model.gametime
     }
+    var countdownTime: Int {
+        model.countdownTime
+    }
+    func countdownTimeUpdate() {
+        model.countdownTimeUpdate()
+    }
     func updateGameTime() {
         model.updateGameTime()
     }
