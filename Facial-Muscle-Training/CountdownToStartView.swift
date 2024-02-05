@@ -22,6 +22,11 @@ struct CountdownToStartView : View {
                     try await Task.sleep(nanoseconds: UInt64(1_000_000_000))
                     if arViewModel.countdownTime > 0  && arViewModel.gameStage == .game{
                         arViewModel.countdownTimeUpdate()
+                        if arViewModel.countdownTime > 0 {
+                            arViewModel.playCountdownAudio()
+                        } else {
+                            arViewModel.playSuccessAudio()
+                        }
                     }
                 } catch {
                 }

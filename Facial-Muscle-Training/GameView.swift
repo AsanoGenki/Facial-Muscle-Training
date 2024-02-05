@@ -11,6 +11,7 @@ import RealityKit
 struct GameView : View {
     @ObservedObject var arViewModel : ARViewModel = ARViewModel()
     @State var frameSize: CGFloat = 100
+    @AppStorage(StorageKeys.endingHighestScore.rawValue) var endingHighestScore: Int?
     var body: some View {
         if arViewModel.countdownTime > 0 {
             CountdownToStartView(arViewModel: arViewModel)
@@ -23,7 +24,7 @@ struct GameView : View {
                             Label(String(arViewModel.score), systemImage: "gamecontroller")
                                 .padding()
                                 .background(RoundedRectangle(cornerRadius: 15).fill(.regularMaterial))
-                            Label(String("0"), systemImage: "trophy")
+                            Label(String(endingHighestScore ?? 0), systemImage: "trophy")
                                 .padding()
                                 .background(RoundedRectangle(cornerRadius: 15).fill(.regularMaterial))
                                 .foregroundColor(.yellow)
@@ -59,8 +60,11 @@ struct GameView : View {
                     do {
                         try await Task.sleep(nanoseconds: UInt64(1_000_000_000))
                         arViewModel.updateGameTime()
-                        
+                        if arViewModel.gameTime < 6 && arViewModel.gameTime > 0 {
+                            arViewModel.playCountdownAudio()
+                        }
                         if arViewModel.gameTime == 0 {
+                            arViewModel.playEndingAudio()
                             arViewModel.changeGameStage(newGameStage: .ending)
                         }
                     } catch {

@@ -20,7 +20,9 @@ struct ARModel {
     var currentScore: Int = 0
     var gametime: Int = 0
     var countdownTime: Int = 3
-    
+    private let countdownAudio = try!  AVAudioPlayer(data: NSDataAsset(name: "Countdown")!.data)
+    private let successAudio = try!  AVAudioPlayer(data: NSDataAsset(name: "Success")!.data)
+    private let endingAudio = try!  AVAudioPlayer(data: NSDataAsset(name: "Ending Audio")!.data)
     init() {
         arView = ARView(frame: .zero)
         arView.session.run(ARFaceTrackingConfiguration())
@@ -93,7 +95,7 @@ struct ARModel {
             simpleSuccess()
             collectedFaces.append(facesArray[0])
             facesArray.remove(at: 0)
-
+            playSuccessAudio()
         }
     }
     mutating func mouthCheck(tongueOut: Float, frownLeft: Float, frownRight: Float, smileLeft: Float, smileRight: Float, mouthPucker: Float, mouthFunnel: Float) -> mouthScale {
@@ -152,5 +154,14 @@ struct ARModel {
     func simpleSuccess() {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.success)
+    }
+    func playCountdownAudio() {
+        countdownAudio.play()
+    }
+    func playSuccessAudio() {
+        successAudio.play()
+    }
+    func playEndingAudio() {
+        endingAudio.play()
     }
 }

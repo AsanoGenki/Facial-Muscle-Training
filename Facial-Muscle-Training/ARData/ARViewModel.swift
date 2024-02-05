@@ -33,6 +33,15 @@ class ARViewModel: UIViewController, ObservableObject, ARSessionDelegate {
     func updateGameTime() {
         model.updateGameTime()
     }
+    func playCountdownAudio() {
+        model.playCountdownAudio()
+    }
+    func playSuccessAudio() {
+        model.playSuccessAudio()
+    }
+    func playEndingAudio() {
+        model.playEndingAudio()
+    }
     func shuffle() {
         model.facesArray.shuffle()
     }
