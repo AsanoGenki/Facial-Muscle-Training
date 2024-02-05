@@ -11,6 +11,7 @@ import ARKit
 
 struct ARModel {
     private(set) var arView : ARView
+    var gameStageVar: GameStage = .menu
     var mouthStatus: mouthScale = .neutral
     var eyeStatus: eyeScale = .neutral
     var eyebrowStatus: eyebrowScale = .neutral
@@ -24,8 +25,11 @@ struct ARModel {
         for face in faces.allCases {
             facesArray.append(face)
         }
+        facesArray.shuffle()
     }
-    
+    mutating func updateGameStage(gameStage: GameStage) {
+        gameStageVar = gameStage
+    }
     mutating func update(faceAnchor: ARFaceAnchor){
         // LIPS
         let smileRight = Float(truncating: faceAnchor.blendShapes.first(where: {$0.key == .mouthSmileRight})?.value ?? 0)

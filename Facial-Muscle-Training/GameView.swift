@@ -39,7 +39,7 @@ struct GameView : View {
                     Spacer()
                     
                     Button {
-
+                        arViewModel.changeGameStage(newGameStage: .menu)
                     }
                 label:{
                     Label(String("メニュー"), systemImage: "arrowshape.turn.up.backward")

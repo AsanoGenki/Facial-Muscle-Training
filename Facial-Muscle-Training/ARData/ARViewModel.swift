@@ -15,6 +15,9 @@ class ARViewModel: UIViewController, ObservableObject, ARSessionDelegate {
     var arView : ARView {
         model.arView
     }
+    var gameStage: GameStage {
+        model.gameStageVar
+    }
     var score: Int {
         model.currentScore
     }
@@ -33,5 +36,7 @@ class ARViewModel: UIViewController, ObservableObject, ARSessionDelegate {
             model.update(faceAnchor: faceAnchor)
         }
     }
-    
+    func changeGameStage(newGameStage: GameStage) {
+        model.updateGameStage(gameStage: newGameStage)
+    }
 }
