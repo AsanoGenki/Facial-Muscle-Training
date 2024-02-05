@@ -17,10 +17,12 @@ struct ARModel {
     var eyebrowStatus: eyebrowScale = .neutral
     var facesArray: Array<faces> = []
     var currentScore: Int = 0
+    var gametime: Int = 0
     
     init() {
         arView = ARView(frame: .zero)
         arView.session.run(ARFaceTrackingConfiguration())
+        gametime = 15
         facesArray = []
         for face in faces.allCases {
             facesArray.append(face)
@@ -29,6 +31,12 @@ struct ARModel {
     }
     mutating func updateGameStage(gameStage: GameStage) {
         gameStageVar = gameStage
+    }
+    mutating func updateGameTime() {
+        switch gameStageVar {
+        case .game: gametime -= 1
+        default: break
+        }
     }
     mutating func update(faceAnchor: ARFaceAnchor){
         // LIPS
@@ -64,8 +72,12 @@ struct ARModel {
     }
     mutating func faceCheck(face: faces, eyes: eyeScale, eyebrows: eyebrowScale, mouth: mouthScale ) {
         if (face.eyeScale.contains(where: {$0 == eyes})) && (face.eyebrowScale.contains(where: {$0 == eyebrows})) && (face.mouthScale.contains(where: {$0 == mouth})) {
-
             currentScore += 1
+            if currentScore < 10 {
+                gametime += 2
+            } else {
+                gametime += 1
+            }
             simpleSuccess()
             facesArray.remove(at: 0)
 

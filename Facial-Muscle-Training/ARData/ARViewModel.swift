@@ -21,6 +21,12 @@ class ARViewModel: UIViewController, ObservableObject, ARSessionDelegate {
     var score: Int {
         model.currentScore
     }
+    var gameTime: Int {
+        model.gametime
+    }
+    func updateGameTime() {
+        model.updateGameTime()
+    }
     func shuffle() {
         model.facesArray.shuffle()
     }

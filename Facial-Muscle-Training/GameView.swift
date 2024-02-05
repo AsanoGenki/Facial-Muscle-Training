@@ -26,8 +26,9 @@ struct GameView : View {
                                     .foregroundColor(.yellow)
                     }
                     Spacer()
-                    Label(String("0"), systemImage: "clock")
+                    Label(String(arViewModel.gameTime), systemImage: "clock")
                         .padding()
+                        .foregroundColor(arViewModel.gameTime > 5 ? Color(uiColor: .label) : .red)
                         .background(RoundedRectangle(cornerRadius: 15).fill(.regularMaterial))
                 }
                 Spacer()
@@ -48,6 +49,20 @@ struct GameView : View {
                         .background(RoundedRectangle(cornerRadius: 15).fill(.regularMaterial))
                 }.padding(20)
                 }
+            }
+        }
+        .task {
+                while arViewModel.gameTime > 0 {
+                    do {
+                        try await Task.sleep(nanoseconds: UInt64(1_000_000_000))
+                        arViewModel.updateGameTime()
+                        
+                        if arViewModel.gameTime == 0 {
+                            arViewModel.changeGameStage(newGameStage: .menu)
+                        }
+                    } catch {
+                        print ("error")
+                    }
             }
         }
     }
